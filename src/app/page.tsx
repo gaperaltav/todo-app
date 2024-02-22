@@ -2,14 +2,19 @@
 
 import { useState } from "react";
 import TodoItem from "./ui/todo-item";
+import initialTodos, { Todo } from "./lib/inital-todos";
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
-  const [todos, setTodos] = useState<{ text: string; checked: boolean }[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(initialTodos);
 
   const onAddTodo = () => {
-    setTodos((prev) => [...prev, { text: todoText, checked: false }]);
+    setTodos((prev) => [...prev, { id: 3, text: todoText, checked: false }]);
     setTodoText("");
+  };
+
+  const onCheckTodo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const index = parseInt(event.target.id);
   };
 
   return (
@@ -37,7 +42,7 @@ export default function Home() {
       <div className="todo-list">
         <ul>
           {todos.map((todo, i) => (
-            <TodoItem key={i} text={todo.text} checked={todo.checked} />
+            <TodoItem key={i} data={todo} onCheckTodo={onCheckTodo} />
           ))}
         </ul>
       </div>
