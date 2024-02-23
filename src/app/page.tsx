@@ -14,7 +14,8 @@ export default function Home() {
   const [todos, setTodos] = useState<Todo[]>(() => INTIAL_DATA);
 
   const onAddTodo = () => {
-    setTodos((prev) => [...prev, { id: 3, text: todoText, checked: false }]);
+    const nextId = Math.max(...todos.map((todo) => todo.id)) +1;
+    setTodos((prev) => [...prev, { id: nextId, text: todoText, checked: false }]);
     setTodoText("");
   };
 
@@ -23,7 +24,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex justify-center flex-col">
+    <div className="flex w-[100%] justify-center ">
+      <div className="flex flex-col">
       <h1 className="text-lg">Todo app</h1>
       <div className="add-todo-text">
         <input
@@ -50,6 +52,7 @@ export default function Home() {
             <TodoItem key={i} data={todo} onCheckTodo={onCheckTodo} />
           ))}
         </ul>
+      </div>
       </div>
     </div>
   );
