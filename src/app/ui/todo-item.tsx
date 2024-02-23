@@ -1,4 +1,4 @@
-import { Todo } from "../lib/inital-todos";
+import { Todo } from "../types";
 
 const TodoItem = ({
   data,

@@ -2,11 +2,16 @@
 
 import { useState } from "react";
 import TodoItem from "./ui/todo-item";
-import initialTodos, { Todo } from "./lib/inital-todos";
+
+const INTIAL_DATA: Todo[] = [
+  { id: 1, text: "Learn React", checked: false },
+  { id: 2, text: "Learn Next.js", checked: false },
+  { id: 3, text: "Build something", checked: false },
+];
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
-  const [todos, setTodos] = useState<Todo[]>(initialTodos);
+  const [todos, setTodos] = useState<Todo[]>(() => INTIAL_DATA);
 
   const onAddTodo = () => {
     setTodos((prev) => [...prev, { id: 3, text: todoText, checked: false }]);
