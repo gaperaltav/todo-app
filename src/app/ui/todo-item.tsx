@@ -4,16 +4,16 @@ const TodoItem = ({
   onCheckTodo,
 }: {
   data: Todo,
-  onCheckTodo: React.ChangeEventHandler<HTMLInputElement>;
+  onCheckTodo: (id: number) => void,
 }) => (
   <li className="my-1">
     <input
       className="mr-2"
       type="checkbox"
       checked={data.checked}
-      onChange={onCheckTodo}
+      onChange={() => onCheckTodo(data.id)}
     />
-    <span>{data.text}</span>
+    <span className={`${data.checked ? 'line-through': null }`} >{data.text}</span>
   </li>
 );
 

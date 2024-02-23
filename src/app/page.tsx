@@ -19,8 +19,12 @@ export default function Home() {
     setTodoText("");
   };
 
-  const onCheckTodo = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const index = parseInt(event.target.id);
+  const onCheckTodo = (id: number) => {
+    const updatedTodos = todos.map((todo) => ({
+      ...todo,
+      checked: todo.id === id ? !todo.checked : todo.checked,
+    }));
+    setTodos(updatedTodos);
   };
 
   return (
