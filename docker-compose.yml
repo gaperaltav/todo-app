@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  todo-web:
+    container_name: todo-next-app
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    links:
+      - database
+
+  database:
+    container_name: todo-database
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+    ports:
+      - 5432:5432
