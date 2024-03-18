@@ -2,16 +2,25 @@
 
 import { useEffect, useState } from "react";
 import TodoItem from "./ui/todo-item";
-import { fetchTodoList } from "@/db/actions";
+import { fetchTodoList, addTodo } from "@/db/actions";
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState<Todo[]>();
 
-  const getTodoList = async () => await fetchTodoList();
+  const refetchTodoList = async () => fetchTodoList().then((data) => setTodos(data));
+  
+  const addTodoHandler = async () =>
+    addTodo(todoText).then(() => {
+      setTodoText("");
+      refetchTodoList();
+    });
 
   useEffect(() => {
-    getTodoList().then((data) => setTodos(data));
+    fetchTodoList().then((data) => { 
+      console.log(data)
+      setTodos(data)
+    });
   }, []);
 
   return (
@@ -30,7 +39,7 @@ export default function Home() {
           />
           <button
             type="button"
-            onClick={() => {}}
+            onClick={addTodoHandler}
             className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mx-1 disabled:bg-gray-300 disabled:cursor-not-allowed`}
             disabled={todoText.trim() === ""}
           >
