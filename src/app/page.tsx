@@ -2,13 +2,25 @@
 
 import { useEffect, useState } from "react";
 import TodoItem from "./ui/todo-item";
-import { fetchTodoList, addTodo } from "@/db/actions";
+import { fetchTodoList, addTodo, checkTodo } from "@/db/actions";
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState<Todo[]>();
+  const [loading, setLoading] = useState(true);
 
-  const refetchTodoList = async () => fetchTodoList().then((data) => setTodos(data));
+  const refetchTodoList = async () => {
+    setLoading(true);
+    fetchTodoList().then((data) => {
+      setTodos(data);
+      setLoading(false);
+    });
+  };
+
+  const checkTodoHandler = async (id: number, value: boolean) => {
+    setLoading(true);
+   checkTodo(id, value).then(() => refetchTodoList())
+  }
   
   const addTodoHandler = async () =>
     addTodo(todoText).then(() => {
@@ -17,9 +29,9 @@ export default function Home() {
     });
 
   useEffect(() => {
-    fetchTodoList().then((data) => { 
-      console.log(data)
+    fetchTodoList().then((data) => {
       setTodos(data)
+      setLoading(false)
     });
   }, []);
 
@@ -47,12 +59,18 @@ export default function Home() {
           </button>
         </div>
         <div className="todo-list">
-          <ul>
-            {todos &&
-              todos.map((todo, i) => (
-                <TodoItem key={i} data={todo} onCheckTodo={() => {}} />
+          {loading && <div>Loading...</div>}
+          {!loading && todos && (
+            <ul>
+              {todos.map((todo, i) => (
+                <TodoItem
+                  key={i}
+                  data={todo}
+                  onCheckTodo={(id, value) => checkTodoHandler(id, value)}
+                />
               ))}
-          </ul>
+            </ul>
+          )}
         </div>
       </div>
     </div>

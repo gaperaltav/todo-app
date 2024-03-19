@@ -2,6 +2,7 @@
 
 import { todosTable } from "./schema";
 import getDatabase from "./db";
+import { eq } from "drizzle-orm";
 
 export const fetchTodoList = async () => {
   const db = await getDatabase();
@@ -16,4 +17,12 @@ export const addTodo = async (text: string) => {
      text
     }
   return await db.insert(todosTable).values({ ...newTodo });;
+};
+
+export const checkTodo = async (id: number, value: boolean) => {
+  const db = await getDatabase();
+  return await db
+    .update(todosTable)
+    .set({ checked: value })
+    .where(eq(todosTable.id, id));
 };
