@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import TodoItem from "./ui/todo-item";
-import { fetchTodoList, addTodo, checkTodo } from "@/db/actions";
+import { fetchTodoList, addTodo, checkTodo, deleteTodo } from "@/db/actions";
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
@@ -21,7 +21,11 @@ export default function Home() {
     setLoading(true);
    checkTodo(id, value).then(() => refetchTodoList())
   }
-  
+
+  const deleteTodoHandler = async (id: number) => {
+   deleteTodo(id).then(() => refetchTodoList())
+  }
+
   const addTodoHandler = async () =>
     addTodo(todoText).then(() => {
       setTodoText("");
@@ -42,7 +46,7 @@ export default function Home() {
         <div className="add-todo-text">
           <input
             type="text"
-            className="h-[30px]"
+            className="h-[30px] w-[350px]"
             placeholder="TODO text"
             value={todoText}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -67,6 +71,7 @@ export default function Home() {
                   key={i}
                   data={todo}
                   onCheckTodo={(id, value) => checkTodoHandler(id, value)}
+                  onDeleteTodo={(id) => deleteTodoHandler(id)}
                 />
               ))}
             </ul>

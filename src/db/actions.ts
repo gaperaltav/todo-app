@@ -26,3 +26,8 @@ export const checkTodo = async (id: number, value: boolean) => {
     .set({ checked: value })
     .where(eq(todosTable.id, id));
 };
+
+export const deleteTodo = async (id: number) => {
+  const db = await getDatabase();
+  await db.delete(todosTable).where(eq(todosTable.id, id));
+}
