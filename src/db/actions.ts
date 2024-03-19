@@ -1,33 +1,33 @@
 "use server";
 
 import { todosTable } from "./schema";
-import getDatabase from "./db";
 import { eq } from "drizzle-orm";
+import postgres from "postgres";
+import { drizzle } from "drizzle-orm/postgres-js";
 
-export const fetchTodoList = async () => {
-  const db = await getDatabase();
+const connectionString = process.env.DATABASE_URL || "";
+const client = postgres(connectionString);
+const db = drizzle(client);
+
+export  async function fetchTodoList () {
   return await db.select().from(todosTable).orderBy(todosTable.created_at);
 };
 
-
-export const addTodo = async (text: string) => {
-  const db = await getDatabase();
+export async function createTodo(text: string) {
   const newTodo = {
-     checked: false,
-     text
-    }
-  return await db.insert(todosTable).values({ ...newTodo });;
-};
+    checked: false,
+    text
+  };
+  return await db.insert(todosTable).values({ ...newTodo });
+}
 
-export const checkTodo = async (id: number, value: boolean) => {
-  const db = await getDatabase();
+export async function checkTodo (id: number, value: boolean) {
   return await db
     .update(todosTable)
     .set({ checked: value })
     .where(eq(todosTable.id, id));
 };
 
-export const deleteTodo = async (id: number) => {
-  const db = await getDatabase();
+export async function deleteTodo (id: number) {
   await db.delete(todosTable).where(eq(todosTable.id, id));
 }

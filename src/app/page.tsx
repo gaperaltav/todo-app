@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import TodoItem from "./ui/todo-item";
-import { fetchTodoList, addTodo, checkTodo, deleteTodo } from "@/db/actions";
+import { fetchTodoList, createTodo, checkTodo, deleteTodo } from "@/db/actions";
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
@@ -27,7 +27,7 @@ export default function Home() {
   }
 
   const addTodoHandler = async () =>
-    addTodo(todoText).then(() => {
+    createTodo(todoText).then(() => {
       setTodoText("");
       refetchTodoList();
     });
