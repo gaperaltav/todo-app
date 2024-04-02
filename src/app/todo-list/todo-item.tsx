@@ -1,4 +1,3 @@
-import { deleteTodo } from "@/db/actions";
 
 const TodoItem = ({
   data,
@@ -22,7 +21,9 @@ const TodoItem = ({
       </span>
     </div>
     <div>
-      <button className="btn right-0" onClick={() => onDeleteTodo(data.id)}> x </button>
+      <button className="btn right-0" onClick={() => onDeleteTodo(data.id)}>
+        X
+      </button>
     </div>
   </li>
 );

@@ -12,6 +12,8 @@
     "db:seed": "tsx ./src/db/seed.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.41.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.2",
     "next": "14.1.0",
