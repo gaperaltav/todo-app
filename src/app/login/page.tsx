@@ -1,11 +1,8 @@
+"use client";
 
-'use client';
-
-import { signInWithGoogle } from './actions';
+import { signIn } from "next-auth/react";
 
 export default function Login() {
-  const onClickGoogleLogin = async () => await signInWithGoogle();
-
   return (
     <>
       <div className="flex flex w-[100%] justify-center">
@@ -34,13 +31,18 @@ export default function Login() {
         </div>
       </div>
       OR
-      <button
-        type="button"
-        className="dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 text-[#fff]"
-        onClick={onClickGoogleLogin}
+      <form
+        action={async () => {
+          signIn("google");
+        }}
       >
-        Login with google
-      </button>
+        <button
+          type="submit"
+          className="dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 text-[#fff]"
+        >
+          Login with google
+        </button>
+      </form>
     </>
   );
 }
