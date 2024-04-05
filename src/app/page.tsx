@@ -16,8 +16,6 @@ export default function Home() {
     }
   }, [code]);
 
-  console.log({isLogedIn})
-
   return (<>
     {isLogedIn ? <TodoList /> : <Login />}
   </>

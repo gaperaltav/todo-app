@@ -1,19 +1,10 @@
 
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { signInWithGoogle } from './actions';
 
 export default function Login() {
-  const router = useRouter()
-
-  const onClickGoogleLogin = async () => {
-    const google = await signInWithGoogle()
-    if(!google) return console.error('Error logging in with Google')
-    if(google.url){
-      router.push(google.url)
-    }
-  }
+  const onClickGoogleLogin = async () => await signInWithGoogle();
 
   return (
     <>
@@ -25,13 +16,13 @@ export default function Login() {
               type="email"
               className="border border-gray-300"
               name=""
-              id=""
+              id="email"
             />
             <input
               type="password"
               className="border border-gray-300"
               name=""
-              id=""
+              id="password"
             />
             <button
               type="button"
