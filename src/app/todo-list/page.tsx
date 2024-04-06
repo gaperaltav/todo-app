@@ -1,3 +1,5 @@
+'use client'
+
 import { checkTodo, createTodo, deleteTodo, fetchTodoList } from "@/db/actions";
 import { useEffect, useState } from "react";
 import TodoItem from "./todo-item";
