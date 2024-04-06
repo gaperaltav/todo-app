@@ -6,9 +6,13 @@ import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 
 const connectionString = process.env.DATABASE_URL || "";
-const client = postgres(connectionString);
+const client = postgres(connectionString, { prepare: false });
 
 const db = drizzle(client);
+
+export async function getDataBase() {
+  return await db;
+}
 
 export  async function fetchTodoList () {
   return await db.select().from(todosTable).orderBy(todosTable.created_at);

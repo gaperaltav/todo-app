@@ -1,23 +1,12 @@
 "use client";
-
-import { useSearchParams } from "next/navigation";
+import { cookies } from "next/headers";
 import { TodoList } from "./todo-list/page";
-import { useEffect, useState } from "react";
-import Login from "./login/page";
+import { useCookies } from "react-cookie";
 
 export default function Home() {
-  const [ isLogedIn, setIsLogedIn ] = useState(false);
-  const searchParams = useSearchParams();
-  const code = searchParams.get("code");
+  const [cookie] = useCookies(['user_id'])
 
-  useEffect(() => {
-    if(code){
-      setIsLogedIn(true)
-    }
-  }, [code]);
+console.log({ user: cookie.user_id})
 
-  return (<>
-    {isLogedIn ? <TodoList /> : <Login />}
-  </>
-  )
+  return  <TodoList />;
 }
