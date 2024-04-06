@@ -14,13 +14,14 @@ export async function getDataBase() {
   return await db;
 }
 
-export  async function fetchTodoList () {
-  return await db.select().from(todosTable).orderBy(todosTable.created_at);
+export  async function fetchTodoList (userId: string) {
+  return await db.select().from(todosTable).where(eq(todosTable.userId, userId)).orderBy(todosTable.created_at);
 };
 
-export async function createTodo(text: string) {
+export async function createTodo(text: string, userId: string) {
   const newTodo = {
     checked: false,
+    userId,
     text
   };
   return await db.insert(todosTable).values({ ...newTodo });

@@ -1,15 +1,18 @@
 import { checkTodo, createTodo, deleteTodo, fetchTodoList } from "@/db/actions";
 import { useEffect, useState } from "react";
 import TodoItem from "./todo-item";
+import { useCookies } from "react-cookie";
 
 export function TodoList(){
   const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState<Todo[]>();
   const [loading, setLoading] = useState(true);
+  const [cookie] = useCookies(["user_id"]);
+  const { user_id: userId } = cookie
 
   const refetchTodoList = async () => {
     setLoading(true);
-    fetchTodoList().then((data) => {
+    fetchTodoList(userId).then((data) => {
       setTodos(data);
       setLoading(false);
     });
@@ -25,17 +28,15 @@ export function TodoList(){
   }
 
   const addTodoHandler = async () =>
-    createTodo(todoText).then(() => {
+    createTodo(todoText, userId).then(() => {
       setTodoText("");
       refetchTodoList();
     });
 
   useEffect(() => {
-    fetchTodoList().then((data) => {
-      setTodos(data)
-      setLoading(false)
-    });
+    refetchTodoList()
   }, []);
+
     return(<div className="flex w-[100%] justify-center ">
     <div className="flex flex-col">
       <h1 className="text-lg">Todo app</h1>
