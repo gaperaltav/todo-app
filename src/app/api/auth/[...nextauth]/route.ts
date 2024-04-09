@@ -18,7 +18,7 @@ const handlers = NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
       const db = await getDataBase();
       let sessionUser: { id: number; name: string | null };
 
@@ -38,10 +38,10 @@ const handlers = NextAuth({
       }
 
       cookies().delete("user_id");
-      cookies().set("user_id", sessionUser.id);
+      cookies().set("user_id", sessionUser.id.toString());
       return true;
     },
-    redirect({ url, baseUrl }) {
+    redirect({ baseUrl }) {
       return baseUrl;
     },
   },

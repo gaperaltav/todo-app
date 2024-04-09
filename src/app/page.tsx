@@ -36,8 +36,12 @@ export default function TodoList() {
     });
 
   useEffect(() => {
-    refetchTodoList();
-  }, []);
+    setLoading(true);
+    fetchTodoList(userId).then((data) => {
+      setTodos(data);
+      setLoading(false);
+    });
+  }, [userId]);
 
   return (
     <div className="flex w-[100%] justify-center ">
