@@ -22,19 +22,19 @@ const handlers = NextAuth({
       const db = await getDataBase();
       let sessionUser: { id: number; name: string | null };
 
-      const exits = await db
+      const userExists = await db
         .select()
         .from(users)
         .where(eq(users.email, user.email!));
 
-      if (exits && exits.length === 0) {
+      if (userExists && userExists.length === 0) {
         const [added] = await db
           .insert(users)
           .values({ email: user.email!, name: user.name, image: user.image })
           .returning();
         sessionUser = added;
       } else {
-        sessionUser = exits[0];
+        sessionUser = userExists[0];
       }
 
       cookies().delete("user_id");
