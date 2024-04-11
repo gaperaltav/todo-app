@@ -45,6 +45,11 @@ const handlers = NextAuth({
       return baseUrl;
     },
   },
+  events: {
+    signOut() {
+      cookies().delete("user_id");
+    }
+  }
 });
 
 export { handlers as GET, handlers as POST };
