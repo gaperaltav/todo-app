@@ -21,7 +21,6 @@ const handlers = NextAuth({
     async signIn({ user }) {
       const db = await getDataBase();
       let sessionUser: { id: number; name: string | null };
-
       const userExists = await db
         .select()
         .from(users)
@@ -44,12 +43,18 @@ const handlers = NextAuth({
     redirect({ baseUrl }) {
       return baseUrl;
     },
+    session({ session }) {
+      return session;
+    },
+    jwt({ token }) {
+      return token;
+    },
   },
   events: {
     signOut() {
       cookies().delete("user_id");
-    }
-  }
+    },
+  },
 });
 
 export { handlers as GET, handlers as POST };

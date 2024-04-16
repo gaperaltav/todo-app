@@ -2,7 +2,6 @@
 import { checkTodo, createTodo, deleteTodo, fetchTodoList } from "@/db/actions";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { signOut } from "next-auth/react";
 import TodoItem from "./todo-item";
 
 export default function TodoList() {
@@ -10,6 +9,7 @@ export default function TodoList() {
   const [todos, setTodos] = useState<Todo[]>();
   const [loading, setLoading] = useState(true);
   const [cookie] = useCookies(["user_id"]);
+
   const { user_id: userId } = cookie;
 
   const refetchTodoList = async () => {
@@ -45,7 +45,6 @@ export default function TodoList() {
 
   return (
     <div className="flex w-[100%] justify-center ">
-      <a href="#" onClick={() => signOut()}> Sign Out </a>
       <div className="flex flex-col">
         <h1 className="text-lg">Todo app</h1>
         <div className="add-todo-text">
