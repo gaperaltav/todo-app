@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import { checkTodo, createTodo, deleteTodo, fetchTodoList } from "@/db/actions";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
@@ -44,14 +44,13 @@ export default function TodoList() {
   }, [userId]);
 
   return (
-    <div className="flex w-[100%] justify-center ">
+    <div className="flex justify-center">
       <div className="flex flex-col">
-        <h1 className="text-lg">Todo app</h1>
         <div className="add-todo-text">
           <input
             type="text"
-            className="h-[30px] w-[350px]"
-            placeholder="TODO text"
+            className="h-[35px] w-[480px] max-md:w-64  border-[1px] border-[#808080] rounded"
+            placeholder=" Insert your todo's text"
             value={todoText}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setTodoText(event.target.value)
@@ -60,7 +59,7 @@ export default function TodoList() {
           <button
             type="button"
             onClick={addTodoHandler}
-            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mx-1 disabled:bg-gray-300 disabled:cursor-not-allowed`}
+            className={`bg-blue-500 h-[35px] hover:bg-blue-700 w-20 max-md:w-15 text-white font-bold py-1 px-2 rounded mx-1 disabled:bg-gray-300 disabled:cursor-not-allowed`}
             disabled={todoText.trim() === ""}
           >
             Add

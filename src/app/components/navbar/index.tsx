@@ -4,11 +4,10 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 export default function Navbar() {
   const { data } = useSession();
-  console.log({ data });
   return (
-    <div className="w-[100] mx-6 flex justify-between p-[10px] mb-[10px]">
-      <div>
-        <a href="#" className="underline" onClick={() => signOut()}>
+    <div className="w-[100] px-6 flex justify-between p-[10px] mb-[10px] bg-[#fff] h-[70px]">
+      <div className="flex">
+        <a href="#" className="content-center" onClick={() => signOut()}>
           <Image
             src={`/icons/logout.svg`}
             alt="tu amo"
@@ -16,18 +15,22 @@ export default function Navbar() {
             height="20"
           />
         </a>
+        <div className="content-center mx-2">
+          <h1 className="font-bold">TODO APP</h1>
+        </div>
+        
       </div>
 
       <div className="flex">
-        <p className="mr-1">
+        <p className="content-center  mr-2">
           Hi! <strong>{` ${data?.user?.name}`}</strong>
         </p>
         <Image
-          className="rounded-full"
+          className="w-12 h-12 rounded-full"
           src={data?.user?.image ?? `/icons/user.svg`}
-          alt="tu amo"
-          width="28"
-          height="28"
+          alt="user photo"
+          width="32"
+          height="32"
         />
       </div>
     </div>

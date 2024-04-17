@@ -8,7 +8,7 @@ const TodoItem = ({
   onCheckTodo: (id: number, value: boolean) => void;
   onDeleteTodo: (id: number) => void;
 }) => (
-  <li className="my-1 mt-5 flex justify-between">
+  <li className="mr-1 mt-5 mx-1 flex justify-between bg-[#fff] px-2 py-4">
     <div>
       <input
         className="mr-2"
@@ -20,9 +20,9 @@ const TodoItem = ({
         {data.text}
       </span>
     </div>
-    <div>
-      <button className="btn right-0" onClick={() => onDeleteTodo(data.id)}>
-        X
+    <div className="mr-2">
+      <button className="btn" onClick={() => onDeleteTodo(data.id)}>
+        x
       </button>
     </div>
   </li>

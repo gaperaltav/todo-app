@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <TodoList />
+      <div className="w-100">
+        <TodoList />
+      </div>
     </>
   );
 }
