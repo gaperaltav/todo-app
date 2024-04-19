@@ -1,5 +1,5 @@
 "use client";
-import { checkTodo, createTodo, deleteTodo, fetchTodoList } from "@/db/actions";
+import { checkTodo, createTodo, deleteTodo, getTodosByUserId } from "@/db/actions";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import TodoItem from "./todo-item";
@@ -12,9 +12,9 @@ export default function TodoList() {
 
   const { user_id: userId } = cookie;
 
-  const refetchTodoList = async () => {
+  const getTodos = async () => {
     setLoading(true);
-    fetchTodoList(userId).then((data) => {
+    getTodosByUserId(userId).then((data) => {
       setTodos(data);
       setLoading(false);
     });
@@ -22,26 +22,22 @@ export default function TodoList() {
 
   const checkTodoHandler = async (id: number, value: boolean) => {
     setLoading(true);
-    checkTodo(id, value).then(() => refetchTodoList());
+    checkTodo(id, value).then(() => getTodos());
   };
 
   const deleteTodoHandler = async (id: number) => {
-    deleteTodo(id).then(() => refetchTodoList());
+    deleteTodo(id).then(() => getTodos());
   };
 
   const addTodoHandler = async () =>
     createTodo(todoText, userId).then(() => {
       setTodoText("");
-      refetchTodoList();
+      getTodos();
     });
 
   useEffect(() => {
-    setLoading(true);
-    fetchTodoList(userId).then((data) => {
-      setTodos(data);
-      setLoading(false);
-    });
-  }, [userId]);
+    getTodos()
+  }, []);
 
   return (
     <div className="flex justify-center">

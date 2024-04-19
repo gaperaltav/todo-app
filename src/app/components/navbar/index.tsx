@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <div className="w-[100] px-6 flex justify-between p-[10px] mb-[10px] bg-[#fff] h-[70px]">
       <div className="flex">
-        <a href="#" className="content-center" onClick={() => signOut()}>
+        <a href="#" className="content-center" title="Sing Out" onClick={() => signOut()}>
           <Image
             src={`/icons/logout.svg`}
             alt="tu amo"

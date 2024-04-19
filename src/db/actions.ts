@@ -14,7 +14,7 @@ export async function getDataBase() {
   return await db;
 }
 
-export  async function fetchTodoList (userId: string) {
+export  async function getTodosByUserId (userId: string) {
   return await db.select().from(todosTable).where(eq(todosTable.userId, userId)).orderBy(todosTable.created_at);
 };
 
