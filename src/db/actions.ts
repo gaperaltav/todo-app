@@ -14,11 +14,11 @@ export async function getDataBase() {
   return await db;
 }
 
-export  async function getTodosByUserId (userId: string) {
+export  async function getTodosByUserId (userId: number) {
   return await db.select().from(todosTable).where(eq(todosTable.userId, userId)).orderBy(todosTable.created_at);
 };
 
-export async function createTodo(text: string, userId: string) {
+export async function createTodo(text: string, userId: number) {
   const newTodo = {
     checked: false,
     userId,

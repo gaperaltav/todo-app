@@ -1,5 +1,10 @@
 "use client";
-import { checkTodo, createTodo, deleteTodo, getTodosByUserId } from "@/db/actions";
+import {
+  checkTodo,
+  createTodo,
+  deleteTodo,
+  getTodosByUserId,
+} from "@/db/actions";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import TodoItem from "./todo-item";
@@ -14,7 +19,7 @@ export default function TodoList() {
 
   const getTodos = async () => {
     setLoading(true);
-    getTodosByUserId(userId).then((data) => {
+    getTodosByUserId(parseInt(userId)).then((data) => {
       setTodos(data);
       setLoading(false);
     });
@@ -36,7 +41,7 @@ export default function TodoList() {
     });
 
   useEffect(() => {
-    getTodos()
+    getTodos();
   }, []);
 
   return (
