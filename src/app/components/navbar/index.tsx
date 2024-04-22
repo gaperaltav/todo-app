@@ -7,7 +7,12 @@ export default function Navbar() {
   return (
     <div className="w-[100] px-6 flex justify-between p-[10px] mb-[10px] bg-[#fff] h-[70px]">
       <div className="flex">
-        <a href="#" className="content-center" title="Sing Out" onClick={() => signOut()}>
+        <a
+          href="#"
+          className="content-center"
+          title="Sing Out"
+          onClick={() => signOut()}
+        >
           <Image
             src={`/icons/logout.svg`}
             alt="tu amo"
@@ -18,7 +23,6 @@ export default function Navbar() {
         <div className="content-center mx-2">
           <h1 className="font-bold">TODO APP</h1>
         </div>
-        
       </div>
 
       <div className="flex">
