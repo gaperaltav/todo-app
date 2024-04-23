@@ -31,7 +31,8 @@ export async function checkTodo (id: number, value: boolean) {
   return await db
     .update(todosTable)
     .set({ checked: value })
-    .where(eq(todosTable.id, id));
+    .where(eq(todosTable.id, id))
+    .returning();
 };
 
 export async function deleteTodo (id: number) {

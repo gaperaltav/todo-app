@@ -26,12 +26,21 @@ export default function TodoList() {
   };
 
   const checkTodoHandler = async (id: number, value: boolean) => {
-    setLoading(true);
-    checkTodo(id, value).then(() => getTodos());
+    checkTodo(id, value).then((todo) => {
+      const updateTodos: Todo[] = [...(todos || [])];
+      const index = updateTodos.findIndex((t) => t.id === id);
+      updateTodos[index] = {
+        ...updateTodos[index],
+        checked: todo[0].checked,
+      };
+      setTodos(updateTodos);
+    });
   };
 
   const deleteTodoHandler = async (id: number) => {
-    deleteTodo(id).then(() => getTodos());
+    deleteTodo(id).then(() => {
+      setTodos((todos) => todos?.filter((todo) => todo.id !== id));
+    });
   };
 
   const addTodoHandler = async () =>
@@ -70,9 +79,9 @@ export default function TodoList() {
           {loading && <div>Loading...</div>}
           {!loading && todos && (
             <ul>
-              {todos.map((todo, i) => (
+              {todos.map((todo) => (
                 <TodoItem
-                  key={i}
+                  key={todo.id}
                   data={todo}
                   onCheckTodo={(id, value) => checkTodoHandler(id, value)}
                   onDeleteTodo={(id) => deleteTodoHandler(id)}
