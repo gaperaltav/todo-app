@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import TodoItem from "./todo-item";
+import Image from "next/image";
 
 export default function TodoList() {
   const [todoText, setTodoText] = useState("");
@@ -76,7 +77,16 @@ export default function TodoList() {
           </button>
         </div>
         <div className="todo-list">
-          {loading && <div>Loading...</div>}
+          {loading && (
+            <div className="flex justify-center mt-2">
+              <Image
+                src={`/icons/ring-loading.svg`}
+                alt="loading"
+                width="35"
+                height="35"
+              />
+            </div>
+          )}
           {!loading && todos && (
             <ul>
               {todos.map((todo) => (

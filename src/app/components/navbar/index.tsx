@@ -15,7 +15,7 @@ export default function Navbar() {
         >
           <Image
             src={`/icons/logout.svg`}
-            alt="tu amo"
+            alt="logout icon"
             width="20"
             height="20"
           />
