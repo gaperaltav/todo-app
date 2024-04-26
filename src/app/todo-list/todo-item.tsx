@@ -3,12 +3,14 @@ const TodoItem = ({
   data,
   onCheckTodo,
   onDeleteTodo,
+  className = '',
 }: {
   data: Todo;
   onCheckTodo: (id: number, value: boolean) => void;
   onDeleteTodo: (id: number) => void;
+  className?: string;
 }) => (
-  <li className="mr-1 mt-5 mx-1 flex justify-between bg-[#fff] px-2 py-4">
+  <li className={`mr-1 mt-5 mx-1 flex justify-between bg-[#fff] px-2 py-4 ${className}`}>
     <div>
       <input
         className="mr-2"

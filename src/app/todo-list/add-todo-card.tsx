@@ -1,5 +1,6 @@
 import { createTodo } from "@/db/actions";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
+import DueDateDropDown from "./due-date-dropdown";
 
 export default function AddTodoCard({
   updateTodos,
@@ -19,23 +20,28 @@ export default function AddTodoCard({
 
   return (
     <div className="add-todo-card">
-      <input
-        type="text"
-        className="h-[35px] w-[480px] max-md:w-64  border-[1px] border-[#808080] rounded"
-        placeholder=" Insert your todo's text"
-        value={todoText}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setTodoText(event.target.value)
-        }
-      />
-      <button
-        type="button"
-        onClick={addTodoHandler}
-        className={`bg-blue-500 h-[35px] hover:bg-blue-700 w-20 max-md:w-15 text-white font-bold py-1 px-2 rounded mx-1 disabled:bg-gray-300 disabled:cursor-not-allowed`}
-        disabled={todoText.trim() === ""}
-      >
-        Add
-      </button>
+      <div className="flex">
+        <input
+          type="text"
+          className="h-[35px] w-[480px] max-md:w-64  border-[1px] border-[#808080] rounded"
+          placeholder=" Insert your todo's text"
+          value={todoText}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setTodoText(event.target.value)
+          }
+        />
+        <button
+          type="button"
+          onClick={addTodoHandler}
+          className={`bg-blue-500 h-[35px] hover:bg-blue-700 w-20 max-md:w-15 text-white font-bold py-1 px-2 rounded mx-1 disabled:bg-gray-300 disabled:cursor-not-allowed`}
+          disabled={todoText.trim() === ""}
+        >
+          Add
+        </button>
+      </div>
+      <div className="mt-1">
+          <DueDateDropDown />
+      </div>
     </div>
   );
 }
