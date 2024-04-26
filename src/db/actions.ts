@@ -1,7 +1,7 @@
 "use server";
 
 import { todosTable } from "./schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 
@@ -15,7 +15,7 @@ export async function getDataBase() {
 }
 
 export  async function getTodosByUserId (userId: number) {
-  return await db.select().from(todosTable).where(eq(todosTable.userId, userId)).orderBy(todosTable.created_at);
+  return await db.select().from(todosTable).where(eq(todosTable.userId, userId)).orderBy(desc(todosTable.id));
 };
 
 export async function createTodo(text: string, userId: number) {
