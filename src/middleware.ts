@@ -1,10 +1,12 @@
+
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const session = request.cookies.has("user_id");
+export async function middleware(request: NextRequest) {
   let response = NextResponse.next();
-  if (!session) {
+  const cookies = request.cookies.get('next-auth.session-token');
+
+  if (!cookies?.value) {
     response = NextResponse.redirect(
       new URL("/api/auth/signin", request.url)
     );
