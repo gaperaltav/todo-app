@@ -12,6 +12,7 @@
     "db:seed": "tsx ./src/db/seed.ts"
   },
   "dependencies": {
+    "@auth/core": "^0.31.0",
     "@auth/drizzle-adapter": "^0.8.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
