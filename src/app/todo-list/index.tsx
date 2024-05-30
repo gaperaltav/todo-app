@@ -5,22 +5,26 @@ import {
   getTodosByUserId,
 } from "@/db/actions";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import TodoItem from "./todo-item";
 import Image from "next/image";
 import AddTodoCard from "./add-todo-card";
+import { useSession } from "next-auth/react";
+import { AdapterUser } from "next-auth/adapters";
 
 export default function TodoList() {
   const [todos, setTodos] = useState<Todo[]>();
   const [loading, setLoading] = useState(true);
-  const [cookie] = useCookies(["user_id"]);
+  const { data } = useSession();
 
-  const { user_id: userId } = cookie;
+  const user = data?.user as AdapterUser;
+  const userId = user?.id;
 
   const getTodos = async () => {
     setLoading(true);
     getTodosByUserId(userId).then((data) => {
-      setTodos(data);
+      if(data.length > 0){
+        setTodos(data);
+      }
       setLoading(false);
     });
   };
@@ -44,13 +48,15 @@ export default function TodoList() {
   };
 
   useEffect(() => {
-    getTodos();
-  }, []);
+    if (user?.id) {
+      getTodos();
+    }
+  }, [user?.id]);
 
   return (
     <div className="flex justify-center">
       <div className="flex flex-col">
-       <AddTodoCard userId={userId} updateTodos={getTodos} />
+        <AddTodoCard userId={user?.id} updateTodos={getTodos} />
         <div className="todo-list">
           {loading && (
             <div className="flex justify-center mt-2">

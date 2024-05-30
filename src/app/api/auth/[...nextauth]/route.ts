@@ -1,49 +1,36 @@
-import { getDataBase } from "@/db/actions";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { cookies } from "next/headers";
+import { DrizzleAdapter  } from "@auth/drizzle-adapter";
+import db from "@/db";
+import { Adapter } from "next-auth/adapters";
 
 const {
   GOOGLE_CLIENT_ID: clientId = "",
   GOOGLE_CLIENT_SECRET: clientSecret = "",
 } = process.env;
 
-const handlers = NextAuth({
+ export const authOptions: NextAuthOptions = {
+  adapter: DrizzleAdapter(db) as Adapter,
   providers: [
     GoogleProvider({
       clientId,
       clientSecret,
     }),
   ],
+  session: {
+    strategy: "database",
+  },
   callbacks: {
-    async signIn({ user }) {
-      const db = await getDataBase();
-      let sessionUser: { id: string; name: string | null };
-      const userExists = await db
-        .select()
-        .from(users)
-        .where(eq(users.email, user.email!));
-
-      if (userExists && userExists.length === 0) {
-        const [added] = await db
-          .insert(users)
-          .values({ email: user.email!, name: user.name, image: user.image })
-          .returning();
-        sessionUser = added;
-      } else {
-        sessionUser = userExists[0];
-      }
-
-      cookies().delete("user_id");
-      cookies().set("user_id", sessionUser.id.toString());
+    async signIn() {
       return true;
     },
     redirect({ baseUrl }) {
       return baseUrl;
     },
-    session({ session }) {
+    session({ session, user}) {
+      session.user = user;
+      console.log({session, user})
       return session;
     },
     jwt({ token }) {
@@ -55,6 +42,7 @@ const handlers = NextAuth({
       cookies().delete("user_id");
     },
   },
-});
+}
+const handlers = NextAuth(authOptions);
 
 export { handlers as GET, handlers as POST };
