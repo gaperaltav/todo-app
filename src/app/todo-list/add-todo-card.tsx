@@ -7,7 +7,7 @@ export default function AddTodoCard({
   userId,
 }: {
   updateTodos: () => Promise<void>;
-  userId: number;
+  userId: string;
 }) {
   const [todoText, setTodoText] = useState("");
 

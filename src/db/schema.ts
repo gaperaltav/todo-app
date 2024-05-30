@@ -1,10 +1,10 @@
+import { sql } from "drizzle-orm";
 import {
   pgTable,
   serial,
   text,
   boolean,
-  timestamp,
-  integer
+  timestamp
 } from "drizzle-orm/pg-core";
 
 export const todosTable = pgTable("todos", {
@@ -13,21 +13,27 @@ export const todosTable = pgTable("todos", {
   checked: boolean("checked").notNull().default(false),
   created_at: text("created_at").notNull().default(new Date().toString()),
   deleted_at: text("deleted_at"),
-  userId: integer("user").references(() => users.id, { onDelete: "cascade" }),
-  dueDate: text('due_date'),
+  userId: text("user").references(() => users.id, { onDelete: "cascade" }),
+  dueDate: text("due_date"),
 });
 
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
   email: text("email").notNull(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  createdDate: timestamp("timestamp2", { mode: "string" })
+    .notNull()
+    .default(sql`now()`),
 });
 
 export const sessions = pgTable("sessions", {
   id: serial("id").primaryKey(),
   sessionToken: text("sessionToken").notNull(),
-  userId: integer("userId")
+  userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),

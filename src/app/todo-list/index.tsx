@@ -19,7 +19,7 @@ export default function TodoList() {
 
   const getTodos = async () => {
     setLoading(true);
-    getTodosByUserId(parseInt(userId)).then((data) => {
+    getTodosByUserId(userId).then((data) => {
       setTodos(data);
       setLoading(false);
     });

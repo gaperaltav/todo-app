@@ -20,7 +20,7 @@ const handlers = NextAuth({
   callbacks: {
     async signIn({ user }) {
       const db = await getDataBase();
-      let sessionUser: { id: number; name: string | null };
+      let sessionUser: { id: string; name: string | null };
       const userExists = await db
         .select()
         .from(users)
