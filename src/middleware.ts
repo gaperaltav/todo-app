@@ -1,22 +1,21 @@
+import { getToken } from "next-auth/jwt";
+import { withAuth } from "next-auth/middleware";
+const env = process.env.NODE_ENV;
 
-import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
+export default withAuth({
+  callbacks: {
+    authorized: ({ req }) => {
+      const cookieName =
+        env === "development"
+          ? "next-auth.session-token"
+          : "__Secure-next-auth.session-token";
+      const sessionCookie = req.cookies.get(cookieName);
 
-export async function middleware(request: NextRequest) {
-  let response = NextResponse.next();
-  const cookies = request.cookies.get('next-auth.session-token');
-  console.log({ cookies })
-
-  if (cookies && cookies?.value.trim() !== '') {
-      return response;
-  }
-  response = NextResponse.redirect(
-    new URL("/api/auth/signin", request.url)
-  );
-
-  return response
-}
-
-export const config = {
-  matcher: "/",
-};
+      console.log({ sessionCookie });
+      if (sessionCookie && sessionCookie.value !== "") {
+        return true;
+      }
+      return false;
+    },
+  },
+});

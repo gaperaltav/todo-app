@@ -31,7 +31,6 @@ const authOptions: NextAuthOptions =  {
       },
       session({ session, user }) {
         session.user = user;
-        console.log({ session, user });
         return session;
       },
     
