@@ -33,13 +33,15 @@ const handlers = NextAuth({
       console.log({ session, user });
       return session;
     },
+  
     jwt({ token }) {
       return token;
     },
   },
   events: {
     signOut() {
-      cookies().delete("user_id");
+      cookies().delete("next-auth.session-token");
+      cookies().delete("next-auth.csrf-token");
     },
   },
 });
