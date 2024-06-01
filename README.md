@@ -2,7 +2,7 @@
 
 ## The project
 
-This is a TODO app I'm building to learn NextJS concepts. You can see a live version (here)[https://todo-app-green-nine.vercel.app/].
+This is a TODO app I'm building to learn NextJS concepts. You can see a live version [here][https://todo-app-green-nine.vercel.app/].
 
 ## In development featatures: 
 - [ ] Due date for each todo.
