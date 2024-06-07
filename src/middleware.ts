@@ -11,7 +11,6 @@ export default withAuth({
           : "__Secure-next-auth.session-token";
       const sessionCookie = req.cookies.get(cookieName);
 
-      console.log({ sessionCookie });
       if (sessionCookie && sessionCookie.value !== "") {
         return true;
       }
