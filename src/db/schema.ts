@@ -17,7 +17,7 @@ export const todosTable = pgTable("todos", {
   created_at: text("created_at").notNull().default(new Date().toString()),
   deleted_at: text("deleted_at"),
   userId: text("user").references(() => users.id, { onDelete: "cascade" }),
-  dueDate: text("due_date"),
+  dueDate: timestamp('due_date', { mode: "date", withTimezone: true }),
 });
 
 export const users = pgTable("user", {

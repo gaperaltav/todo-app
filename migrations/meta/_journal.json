@@ -15,6 +15,20 @@
       "when": 1717039710036,
       "tag": "0001_smooth_zeigeist",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1718127231696,
+      "tag": "0002_light_millenium_guard",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1718127365099,
+      "tag": "0003_milky_ultimo",
+      "breakpoints": true
     }
   ]
 }
