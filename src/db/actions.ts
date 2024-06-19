@@ -18,11 +18,12 @@ export  async function getTodosByUserId (userId: string) {
   return await db.select().from(todosTable).where(eq(todosTable.userId, userId)).orderBy(desc(todosTable.id));
 };
 
-export async function createTodo(text: string, userId: string) {
+export async function createTodo(text: string, userId: string,  dueDate?: Date ) {
   const newTodo = {
     checked: false,
     userId,
-    text
+    text,
+    dueDate
   };
   return await db.insert(todosTable).values({ ...newTodo });
 }

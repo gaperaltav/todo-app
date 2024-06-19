@@ -1,10 +1,13 @@
 import { faCalendarCheck, faClock } from "@fortawesome/free-regular-svg-icons";
 import { faCalendarDay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getInitialDueDate, getInitialDueTime } from "./helpers";
+import { formatToDateString, getFormatDate, getFormatTime } from "./helpers";
 import { useState } from "react";
 
-export default function DueDateDropDown({ setDate }: {setDate: Function}) {
+const getInitialDueDate = () => getFormatDate(new Date());
+const getInitialDueTime = () => getFormatTime(new Date());
+
+export default function DueDateDropDown({ setDate }: { setDate: Function }) {
   const [showDropDown, setShowDropDown] = useState(false);
   const [dueDate, setDueDate] = useState<string>(getInitialDueDate());
   const [dueTime, setDueTime] = useState<string>(getInitialDueTime());
@@ -16,13 +19,16 @@ export default function DueDateDropDown({ setDate }: {setDate: Function}) {
   };
 
   const addTDueDate = () => {
-    //TODO: call setDate Parent event
-  }
+    const dateString = formatToDateString(dueDate, dueTime);
+    const date = new Date(dateString);
+    setDate(date);
+    setShowDropDown(false);
+  };
 
   return (
     <div className="relative">
       <button
-        className="bg-white p-1 rounded text-xs border-solid border-[1px] border-[#ccc] w-[25px]"
+        className="bg-white p-1 rounded text-xs border-solid border-[1px] border-[#ccc] w-[25px] mb-1"
         title="Set due date"
         onClick={() => setShowDropDown((prev) => !prev)}
       >
@@ -71,8 +77,9 @@ export default function DueDateDropDown({ setDate }: {setDate: Function}) {
             </li>
           </ul>
           <div className="flex flex-row-reverse my-2 mx-1 ">
-            <button className="bg-blue-500 rounded py-1 px-3 mx-1 text-white"
-            onClick={addTDueDate}
+            <button
+              className="bg-blue-500 rounded py-1 px-3 mx-1 text-white"
+              onClick={addTDueDate}
             >
               Add
             </button>
