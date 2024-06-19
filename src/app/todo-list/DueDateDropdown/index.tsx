@@ -1,16 +1,18 @@
 import { faCalendarCheck, faClock } from "@fortawesome/free-regular-svg-icons";
 import { faCalendarDay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { formatToDateString, getFormatDate, getFormatTime } from "./helpers";
+import { formatToDateString, getDayMomment, getFormatDate, getFormatTime } from "./helpers";
 import { useState } from "react";
 
 const getInitialDueDate = () => getFormatDate(new Date());
 const getInitialDueTime = () => getFormatTime(new Date());
+const getInitialDayMomment = () => getDayMomment(new Date());
 
 export default function DueDateDropDown({ setDate }: { setDate: Function }) {
   const [showDropDown, setShowDropDown] = useState(false);
   const [dueDate, setDueDate] = useState<string>(getInitialDueDate());
   const [dueTime, setDueTime] = useState<string>(getInitialDueTime());
+  const [dayMomment, setDayMomment] = useState<string>(getInitialDayMomment());
 
   const onCancelHandler = () => {
     setShowDropDown(false);
@@ -19,7 +21,7 @@ export default function DueDateDropDown({ setDate }: { setDate: Function }) {
   };
 
   const addTDueDate = () => {
-    const dateString = formatToDateString(dueDate, dueTime);
+    const dateString = formatToDateString(dueDate, dueTime, dayMomment);
     const date = new Date(dateString);
     setDate(date);
     setShowDropDown(false);
@@ -51,9 +53,9 @@ export default function DueDateDropDown({ setDate }: { setDate: Function }) {
                 />
                 <span className="mx-1"></span>
                 <select
-                  value={"am"}
+                  value={dayMomment}
                   className="border border-gray-300 text-gray-900 text-sm rounded-md px-[6px]"
-                  onChange={() => {}}
+                  onChange={(e) => {setDayMomment(e.target.value)}}
                 >
                   <option value="am">AM</option>
                   <option value="pm">PM</option>

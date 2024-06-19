@@ -1,0 +1,2 @@
+ALTER TABLE "todos" ALTER COLUMN "created_at" SET DEFAULT 'Wed Jun 19 2024 17:49:18 GMT-0400 (Atlantic Standard Time)';--> statement-breakpoint
+ALTER TABLE "todos" ALTER COLUMN "due_date" SET DATA TYPE timestamp;

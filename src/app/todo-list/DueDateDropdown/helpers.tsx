@@ -22,8 +22,18 @@ export function getFormatDate(date: Date) {
   return `${formatedMoth}/${formatedDay}/${date.getFullYear()}`;
 }
 
-export function formatToDateString(dueDate: string, dueTime: string) {
+export function getDayMomment(date: Date) {
+  const hours = date.getHours();
+  return hours >= 12 ? "pm" : "am";
+}
+
+export function formatToDateString(
+  dueDate: string,
+  dueTime: string,
+  dayMomment: string
+) {
   const [moth, day, year] = dueDate.split("/");
   const [hour, minutes] = dueTime.split(":");
-  return `${year}-${moth}-${day}T${hour}:${minutes}:00`;
+  const hoursTo24 = dayMomment === "pm" ? parseInt(hour) + 12 : parseInt(hour);
+  return `${year}-${moth}-${day}T${hoursTo24}:${minutes}:00`;
 }

@@ -29,6 +29,20 @@
       "when": 1718127365099,
       "tag": "0003_milky_ultimo",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1718833415325,
+      "tag": "0004_perpetual_leader",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1718833758552,
+      "tag": "0005_acoustic_silver_fox",
+      "breakpoints": true
     }
   ]
 }

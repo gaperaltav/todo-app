@@ -17,13 +17,14 @@ export default function AddTodoCard({
     if (userId) {
       createTodo(todoText, userId, todoDueDate).then(() => {
         setTodoText("");
+        setTodoDueDate(undefined);
         updateTodos();
       });
     }
   };
 
   const onRemoveDueDate = () => {
-    setTodoDueDate(undefined)
+    setTodoDueDate(undefined);
   };
 
   return (

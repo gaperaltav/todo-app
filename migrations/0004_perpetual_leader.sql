@@ -1,0 +1,1 @@
+ALTER TABLE "todos" ALTER COLUMN "created_at" SET DEFAULT 'Wed Jun 19 2024 17:43:35 GMT-0400 (Atlantic Standard Time)';
