@@ -1,14 +1,23 @@
 import { faCalendarCheck, faClock } from "@fortawesome/free-regular-svg-icons";
 import { faCalendarDay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getInitialDueTime } from "./helpers";
+import { getInitialDueDate, getInitialDueTime } from "./helpers";
 import { useState } from "react";
 
-
-export default function DueDateDropDown() {
+export default function DueDateDropDown({ setDate }: {setDate: Function}) {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [dueDate, setDueDate] = useState("");
-  const [dueTime, setDueTime] = useState(getInitialDueTime());
+  const [dueDate, setDueDate] = useState<string>(getInitialDueDate());
+  const [dueTime, setDueTime] = useState<string>(getInitialDueTime());
+
+  const onCancelHandler = () => {
+    setShowDropDown(false);
+    setDueDate(getInitialDueDate());
+    setDueTime(getInitialDueTime());
+  };
+
+  const addTDueDate = () => {
+    //TODO: call setDate Parent event
+  }
 
   return (
     <div className="relative">
@@ -62,11 +71,13 @@ export default function DueDateDropDown() {
             </li>
           </ul>
           <div className="flex flex-row-reverse my-2 mx-1 ">
-            <button className="bg-blue-500 rounded py-1 px-3 mx-1 text-white">
+            <button className="bg-blue-500 rounded py-1 px-3 mx-1 text-white"
+            onClick={addTDueDate}
+            >
               Add
             </button>
             <button
-              onClick={() => setShowDropDown(false)}
+              onClick={onCancelHandler}
               className="bg-gray-500 rounded py-1 px-3 text-white mx-1"
             >
               Cancel

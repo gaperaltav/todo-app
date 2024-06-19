@@ -1,6 +1,7 @@
 import { createTodo } from "@/db/actions";
 import { useState } from "react";
 import DueDateDropDown from "./DueDateDropdown";
+import { DueDateBox } from "./due-date-box";
 
 export default function AddTodoCard({
   updateTodos,
@@ -10,6 +11,7 @@ export default function AddTodoCard({
   userId?: string;
 }) {
   const [todoText, setTodoText] = useState("");
+  const [todoDueDate, setTodoDueDate] = useState<Date | undefined>(undefined)
 
   const addTodoHandler = async () => {
     if (userId) {
@@ -41,8 +43,10 @@ export default function AddTodoCard({
           Add
         </button>
       </div>
-      <div className="mt-1">
-        <DueDateDropDown />
+      <div className="flex mt-1">
+        <DueDateDropDown setDate={setTodoDueDate} />
+        {todoDueDate && <DueDateBox dueDate={todoDueDate} /> }
+       
       </div>
     </div>
   );

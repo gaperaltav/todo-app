@@ -9,3 +9,8 @@ export function getInitialDueTime() {
 
   return `${hours}: ${minutes}`;
 }
+
+export function getInitialDueDate() {
+  const date = new Date();
+  return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+}
