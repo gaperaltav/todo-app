@@ -7,6 +7,7 @@ import {
   timestamp,
   integer,
   primaryKey,
+  date,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
@@ -17,7 +18,7 @@ export const todosTable = pgTable("todos", {
   created_at: text("created_at").notNull().default(new Date().toString()),
   deleted_at: text("deleted_at"),
   userId: text("user").references(() => users.id, { onDelete: "cascade" }),
-  dueDate: timestamp('due_date', { mode: "string", withTimezone: false }),
+  dueDate: timestamp('due_date', { mode: 'date' }),
 });
 
 export const users = pgTable("user", {

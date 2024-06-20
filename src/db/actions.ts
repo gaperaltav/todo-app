@@ -19,12 +19,11 @@ export  async function getTodosByUserId (userId: string) {
 };
 
 export async function createTodo(text: string, userId: string,  dueDate?: Date ) {
-  const date = dueDate ? dueDate.toISOString() : undefined;
  const newTodo = {
     checked: false,
     userId,
     text,
-    dueDate: date
+    dueDate
   };
   
   return await db.insert(todosTable).values({ ...newTodo });
