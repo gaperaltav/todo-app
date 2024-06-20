@@ -9,7 +9,7 @@ export function getFormatTime(date: Date) {
   if (hours >= 12) {
     hours = hours - 12;
   }
-  return `${hours < 10 && "0"}${hours}:${minutes}`;
+  return `${hours < 10 ? "0" : ""}${hours}:${minutes}`;
 }
 
 export function getFormatDate(date: Date) {

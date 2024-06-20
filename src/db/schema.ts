@@ -6,8 +6,7 @@ import {
   boolean,
   timestamp,
   integer,
-  primaryKey,
-  date,
+  primaryKey
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 

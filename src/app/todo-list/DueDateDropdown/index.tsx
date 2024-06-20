@@ -2,7 +2,7 @@ import { faCalendarCheck, faClock } from "@fortawesome/free-regular-svg-icons";
 import { faCalendarDay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatToDateString, getDayMomment, getFormatDate, getFormatTime } from "./helpers";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 const getInitialDueDate = () => getFormatDate(new Date());
 const getInitialDueTime = () => getFormatTime(new Date());
@@ -10,9 +10,9 @@ const getInitialDayMomment = () => getDayMomment(new Date());
 
 export default function DueDateDropDown({ setDate }: { setDate: Function }) {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [dueDate, setDueDate] = useState<string>(getInitialDueDate());
-  const [dueTime, setDueTime] = useState<string>(getInitialDueTime());
-  const [dayMomment, setDayMomment] = useState<string>(getInitialDayMomment());
+  const [dueDate, setDueDate] = useState<string>(() => getInitialDueDate());
+  const [dueTime, setDueTime] = useState<string>(() => getInitialDueTime());
+  const [dayMomment, setDayMomment] = useState<string>(() => getInitialDayMomment());
 
   const onCancelHandler = () => {
     setShowDropDown(false);
@@ -23,8 +23,19 @@ export default function DueDateDropDown({ setDate }: { setDate: Function }) {
   const addTDueDate = () => {
     const dateString = formatToDateString(dueDate, dueTime, dayMomment);
     const date = new Date(dateString);
+    console.log({date})
     setDate(date);
     setShowDropDown(false);
+  };
+
+  const onChangeDueTime = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setDueTime(value);
+  };
+
+  const onChagneDueDate = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setDueDate(value);
   };
 
   return (
@@ -49,7 +60,7 @@ export default function DueDateDropDown({ setDate }: { setDate: Function }) {
                   type="text"
                   className="h-7 w-[45%] border border-gray-300 text-gray-900 text-sm rounded-md px-[6px]"
                   value={dueTime}
-                  onChange={() => {}}
+                  onChange={onChangeDueTime}
                 />
                 <span className="mx-1"></span>
                 <select
@@ -73,7 +84,7 @@ export default function DueDateDropDown({ setDate }: { setDate: Function }) {
                   className="h-7 w-full border border-gray-300 text-gray-900 text-sm rounded-md px-[6px]"
                   placeholder={"mm/dd/yyyy"}
                   value={dueDate}
-                  onChange={() => {}}
+                  onChange={onChagneDueDate}
                 />
               </div>
             </li>
