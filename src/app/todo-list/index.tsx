@@ -22,7 +22,7 @@ export default function TodoList() {
   const getTodos = async () => {
     setLoading(true);
     getTodosByUserId(userId).then((data) => {
-      if(data.length > 0){
+      if (data.length > 0) {
         setTodos(data);
       }
       setLoading(false);
