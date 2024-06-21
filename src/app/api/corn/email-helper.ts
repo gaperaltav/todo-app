@@ -23,7 +23,7 @@ function _getTransport() {
   return transporter;
 }
 
-export async function sendPendingTodoEmail(email: string, userName: string) {
+export async function sendPendingTodoEmail(email: string, userName: string | null) {
   const transporter = _getTransport();
 
   const info = await transporter.sendMail({
@@ -31,7 +31,7 @@ export async function sendPendingTodoEmail(email: string, userName: string) {
     to: email, // list of receivers
     subject: "You have pending todos ",
     text: "",
-    html: `<p>HI, ${userName} <br /> you have a pending task to complete by today, please make time to complete them <br/> Have a nice day!</p>`,
+    html: `<p>HI, ${userName ? userName: 'You'} <br /> you have a pending task to complete by today, please make time to complete them <br/> Have a nice day!</p>`,
   });
 
   console.log("Eamil sended with id: %s", info.messageId);

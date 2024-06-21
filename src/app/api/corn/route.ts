@@ -1,39 +1,34 @@
+import db from "@/db";
+import { todosTable, users } from "@/db/schema";
+import { eq, lte } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer, { Transporter, TransportOptions } from "nodemailer";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
+import { sendPendingTodoEmail } from "./email-helper";
 
 export async function GET(request: NextRequest) {
-  const {
-    EMAIL_SERVER_HOST: host,
-    EMAIL_SERVER_PORT: port = "587",
-    EMAIL_SERVER_USER: user,
-    EMAIL_SERVER_PASSWORD: pass,
-  } = process.env;
+  try {
+    const todosToNotify = await db
+      .selectDistinctOn([users.id])
+      .from(todosTable)
+      .innerJoin(users, eq(todosTable.userId, users.id))
+      .where(lte(todosTable.dueDate, new Date()));
 
-  const options: SMTPTransport.Options = {
-    host,
-    port: parseInt(port),
-    secure: false,
-    auth: {
-      user,
-      pass,
-    },
-  };
+    if (todosToNotify && todosToNotify.length > 0) {
+      const emailNotifications = todosToNotify.map(async (data) => {
+        const {
+          user: { email, name },
+        } = data;
 
-  const transporter: Transporter = nodemailer.createTransport(options);
+        return await sendPendingTodoEmail(email, name);
+      });
 
-  const info = await transporter.sendMail({
-    from: '"Todo app" <no-reply@todoapp.com>', // sender address
-    to: "gaperaltav@gmail.com", // list of receivers
-    subject: "You have pending todos ",
-    text: "",
-    html: "<p>HI, <br /> you have a pending task to complete by today, please make time to complete them <br/> Have a nice day!</p>", // html body
-  });
-
-  console.log("Message sent: %s", info.messageId);
+      Promise.all(emailNotifications);
+    }
+  } catch (error) {
+    console.log("Error sending email notifications ");
+  }
 
   return NextResponse.json(
-    { host, port },
+    { body: "Emails sent correctly" },
     {
       status: 200,
     }
