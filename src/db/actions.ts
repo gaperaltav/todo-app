@@ -1,18 +1,8 @@
 "use server";
 
+import db from ".";
 import { todosTable } from "./schema";
 import { desc, eq } from "drizzle-orm";
-import postgres from "postgres";
-import { drizzle } from "drizzle-orm/postgres-js";
-
-const connectionString = process.env.DATABASE_URL || "";
-const client = postgres(connectionString, { prepare: false });
-
-const db = drizzle(client);
-
-export async function getDataBase() {
-  return await db;
-}
 
 export  async function getTodosByUserId (userId: string) {
   return await db.select().from(todosTable).where(eq(todosTable.userId, userId)).orderBy(desc(todosTable.id));
