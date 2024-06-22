@@ -23,9 +23,11 @@ const TodoItem = ({
         {data.text}
       </span>
       <div className="mt-1">
-        <div className="inline-block mx-1 py-1 px-2 border text-[13px] rounded-lg text-[#888DA7] bg-[#888DA7] bg-opacity-10">
-        {data.dueDate.toDateString()}
-        </div>
+        {data.dueDate && (
+          <div className="inline-block mx-1 py-1 px-2 border text-[13px] rounded-lg text-[#888DA7] bg-[#888DA7] bg-opacity-10">
+            {data.dueDate.toDateString()}
+          </div>
+        )}
       </div>
     </div>
     <div className="mr-2">
