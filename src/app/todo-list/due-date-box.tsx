@@ -15,7 +15,7 @@ export function DueDateBox({
 }) {
   return (
     <>
-      <div className="mx-1 pl-1 pr-1 py-1 border border-[#c5c596] text-blue text-[13px] rounded-md bg-[#e4e866]">
+      <div className="mx-1 pl-1 pr-1 py-1 border text-[13px] rounded-lg text-[#888DA7] bg-[#888DA7] bg-opacity-10">
         <span title="Todo due date" className="mr-1">
           {`${getFormatDate(dueDate)} - ${getFormatTime(
             dueDate

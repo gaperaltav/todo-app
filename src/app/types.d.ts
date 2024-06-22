@@ -4,4 +4,5 @@ type Todo = {
     checked: boolean;
     created_at: string;
     deleted_at: string | null;
+    dueDate: Date;
   };
