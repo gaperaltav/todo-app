@@ -31,7 +31,7 @@ const TodoItem = ({
       </div>
     </div>
     <div className="mr-2">
-      <button className="btn" onClick={() => onDeleteTodo(data.id)}>
+      <button className="btn h-1" onClick={() => onDeleteTodo(data.id)}>
         x
       </button>
     </div>

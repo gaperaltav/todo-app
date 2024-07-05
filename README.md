@@ -5,9 +5,10 @@
 This is a TODO app I'm building to learn NextJS concepts. You can see a live version [here](https://todo-app-green-nine.vercel.app/).
 
 ## In development featatures: 
-- [ ] Due date for each todo.
-- [ ] Add email notifications for each TODO with a Due date.
-- [ ] Research, select an email service.
+- [x] Due date for each todo.
+- [x] Add email notifications to be send to an user with TODOs that has pedning due dates.
+- [ ] Add validations to date fields.
+- [ ] Research, use an email provider.
 - [ ] Add a cornjob to send the emails before the due date.
 
 ## Run locally

@@ -29,11 +29,7 @@ export function getDayMomment(date: Date) {
 
 export function formatToDateString(
   dueDate: string,
-  dueTime: string,
-  dayMomment: string
 ) {
   const [moth, day, year] = dueDate.split("/");
-  const [hour, minutes] = dueTime.split(":");
-  const hoursTo24 = dayMomment === "pm" ? parseInt(hour) + 12 : parseInt(hour);
-  return `${year}-${moth}-${day}T${hoursTo24 < 10 ? `0${hoursTo24}`: hoursTo24 }:${minutes}`;
+  return `${year}-${moth}-${day}T08:00`;
 }

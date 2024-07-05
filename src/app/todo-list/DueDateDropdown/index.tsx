@@ -1,36 +1,25 @@
-import { faCalendarCheck, faClock } from "@fortawesome/free-regular-svg-icons";
+import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
 import { faCalendarDay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { formatToDateString, getDayMomment, getFormatDate, getFormatTime } from "./helpers";
+import { formatToDateString, getFormatDate } from "./helpers";
 import { ChangeEvent, useState } from "react";
 
 const getInitialDueDate = () => getFormatDate(new Date());
-const getInitialDueTime = () => getFormatTime(new Date());
-const getInitialDayMomment = () => getDayMomment(new Date());
 
 export default function DueDateDropDown({ setDate }: { setDate: Function }) {
   const [showDropDown, setShowDropDown] = useState(false);
-  const [dueDate, setDueDate] = useState<string>(() => getInitialDueDate());
-  const [dueTime, setDueTime] = useState<string>(() => getInitialDueTime());
-  const [dayMomment, setDayMomment] = useState<string>(() => getInitialDayMomment());
+  const [dueDate, setDueDate] = useState<string>(() => getInitialDueDate());;
 
   const onCancelHandler = () => {
     setShowDropDown(false);
     setDueDate(getInitialDueDate());
-    setDueTime(getInitialDueTime());
   };
 
   const addTDueDate = () => {
-    const dateString = formatToDateString(dueDate, dueTime, dayMomment);
+    const dateString = formatToDateString(dueDate);
     const date = new Date(dateString);
-    console.log({date})
     setDate(date);
     setShowDropDown(false);
-  };
-
-  const onChangeDueTime = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setDueTime(value);
   };
 
   const onChagneDueDate = (event: ChangeEvent<HTMLInputElement>) => {
@@ -51,27 +40,6 @@ export default function DueDateDropDown({ setDate }: { setDate: Function }) {
         <div className="absolute bg-white rounded-lg pt-3 px-1 shadow-xl text-[14px] w-40 mt-1">
           <ul>
             <li className="px-1">
-              <div className="flex">
-                <FontAwesomeIcon
-                  icon={faClock}
-                  className="self-center mr-2 ml-1"
-                />
-                <input
-                  type="text"
-                  className="h-7 w-[45%] border border-gray-300 text-gray-900 text-sm rounded-md px-[6px]"
-                  value={dueTime}
-                  onChange={onChangeDueTime}
-                />
-                <span className="mx-1"></span>
-                <select
-                  value={dayMomment}
-                  className="border border-gray-300 text-gray-900 text-sm rounded-md px-[6px]"
-                  onChange={(e) => {setDayMomment(e.target.value)}}
-                >
-                  <option value="am">AM</option>
-                  <option value="pm">PM</option>
-                </select>
-              </div>
             </li>
             <li className="px-1 mt-3">
               <div className="flex">
