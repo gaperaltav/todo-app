@@ -30,6 +30,7 @@ export function getDayMomment(date: Date) {
 export function formatToDateString(
   dueDate: string,
 ) {
-  const [moth, day, year] = dueDate.split("/");
-  return `${year}-${moth}-${day}T08:00`;
+  console.log({ dueDate })
+  const [month, day, year] = dueDate.split("/");
+  return `${year}-${ Number(month) < 10 ? `0${month}`: month }-${ Number(day) < 10 ? `0${day}`: day}T08:00`;
 }
